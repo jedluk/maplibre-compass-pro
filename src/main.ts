@@ -1,6 +1,6 @@
-import './style.css'
-import maplibregl from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
+import './maplibre.css'
+import maplibregl from 'maplibre-gl'
 import { Compass } from './compass';
 
 const map = new maplibregl.Map({

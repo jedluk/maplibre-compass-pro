@@ -1,8 +1,3 @@
-.maplibregl-ctrl-bottom-left {
-    left: 10px;
-    bottom: 10px;
-}
-
 .compass-pro-wrapper {
     perspective: 100px;
 }
@@ -97,6 +92,7 @@
 .compass-pro[data-size="lg"] .needle,
 .compass-pro[data-size="xl"] .needle {
     --width: 2px;
+
     top: -20%;
     height: 140%;
 }
