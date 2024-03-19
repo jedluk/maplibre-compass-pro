@@ -1,0 +1,19 @@
+{
+  "name": "map_compass",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "maplibre-gl": "^4.1.0",
+    "typescript": "^5.4.2",
+    "vite": "^5.1.5"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "version": 8,
+  "name": "OSM raster tiles",
+  "sources": {
+    "openmaptiles": {
+      "attribution": "<a href='https://www.openstreetmap.org/copyright' target='_blank'>© OpenStreetMap contributors</a>",
+      "type": "raster",
+      "tiles": ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"],
+      "tileSize": 256
+    }
+  },
+  "layers": [
+    {
+      "id": "raster-tiles",
+      "type": "raster",
+      "source": "openmaptiles"
+    }
+  ]
+}
