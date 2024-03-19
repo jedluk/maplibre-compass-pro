@@ -81,17 +81,24 @@
 
     background-color: var(--color-compass-needle);
     width: var(--width);
-    height: calc(100% + (var(--compass-size) / 5));
+    top: -10%;
     left: calc(50% - var(--width) / 2);
-    top: calc(-1* var(--compass-size) / 10);
+    height: 120%;
     position: absolute;
     transform-origin: center;
     transform: rotate(var(--rotation));
 }
 
+.compass-pro[data-size="md"] .needle {
+    top: -14%;
+    height: 128%;
+}
+
 .compass-pro[data-size="lg"] .needle,
 .compass-pro[data-size="xl"] .needle {
     --width: 2px;
+    top: -20%;
+    height: 140%;
 }
 
 .needle:nth-of-type(1) {
