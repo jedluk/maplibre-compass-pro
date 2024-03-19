@@ -8,9 +8,29 @@
     "build": "tsc && vite build",
     "preview": "vite preview"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "engineStrict": true,
+  "engines": {
+    "node": "20",
+    "npm": "10"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jedluk/maplibre-compass-pro"
+  },
+  "bugs": {
+    "url": "https://github.com/jedluk/maplibre-compass-pro/issues"
+  },
+  "keywords": [
+    "compass",
+    "maplibre",
+    "mapbox"
+  ],
+  "author": {
+    "name": "Jedrzej Lukasiuk",
+    "email": "jedrzej.lukasiuk@gmail.com",
+    "url": "https://lukasi.uk"
+  },
+  "license": "MIT",
   "dependencies": {
     "maplibre-gl": "^4.1.0",
     "typescript": "^5.4.2",
