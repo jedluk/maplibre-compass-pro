@@ -3,12 +3,12 @@
 }
 
 .compass-pro-wrapper[data-size="md"] {
-    perspective: 130px;
+    perspective: 150px;
 }
 
 .compass-pro-wrapper[data-size="lg"],
 .compass-pro-wrapper[data-size="xl"] {
-    perspective: 250px;
+    perspective: 200px;
 }
 
 .compass-pro {

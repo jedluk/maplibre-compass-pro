@@ -1,20 +1,20 @@
 import './compass.css'
 import { IControl, Map } from 'maplibre-gl'
 
-interface CompassProps {
+export type CompassProps = {
     size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
     visualizePitch?: boolean
     onClick?: () => void
 }
 
 export class Compass implements IControl {
-    _map: Map
+    _map?: Map
     size: NonNullable<CompassProps['size']>
     visualizePitch: boolean
-    compassElement: HTMLDivElement
+    compassElement?: HTMLDivElement
     customClick?: () => void
 
-    constructor({ size = 'md', visualizePitch = true, onClick }: CompassProps) {
+    constructor({ size = 'md', visualizePitch = false, onClick }: CompassProps) {
         this.size = size
         this.visualizePitch = visualizePitch
         this.customClick = onClick
@@ -38,19 +38,22 @@ export class Compass implements IControl {
 
     changeSize = (size: NonNullable<CompassProps['size']>) => {
         this.size = size
-        this.compassElement.setAttribute('data-size', this.size)
+        this.compassElement?.setAttribute('data-size', this.size)
     }
 
     handleClick = () => {
         if (this.customClick) {
             this.customClick()
         } else {
-            this._map.resetNorth()
-            this._map.resetNorthPitch()
+            this._map?.resetNorth()
+            this._map?.resetNorthPitch()
         }
     }
 
     handleMapJog = () => {
+        if (!this._map || !this.compassElement) {
+            return
+        }
         const bearing = -1 * this._map.getBearing()
         let transform = `rotate(${bearing}deg)`
         if (this.visualizePitch) {
@@ -62,6 +65,7 @@ export class Compass implements IControl {
 
     createCompassElement = (): HTMLElement => {
         const container = document.createElement('div')
+        container.id = 'compass'
         container.classList.add('compass-pro-wrapper')
         container.setAttribute('data-size', this.size)
 
