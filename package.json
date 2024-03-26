@@ -1,7 +1,7 @@
 {
   "name": "map_compass",
   "version": "1.0.0",
-  "description": "",
+  "description": "Professional compass for maplibre-based projects",
   "main": "index.js",
   "scripts": {
     "dev": "vite",
@@ -31,7 +31,10 @@
     "url": "https://lukasi.uk"
   },
   "license": "MIT",
-  "dependencies": {
+  "peerDependencies": {
+    "maplibre-gl": ">3.0.0"
+  },
+  "devDependencies": {
     "maplibre-gl": "^4.1.0",
     "typescript": "^5.4.2",
     "vite": "^5.1.5"
