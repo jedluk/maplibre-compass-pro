@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite'
 import { resolve } from 'path'
+import dts from 'vite-plugin-dts'
 
 export default defineConfig(({ command }) => {
   return {
@@ -8,12 +9,19 @@ export default defineConfig(({ command }) => {
       lib: {
         entry: resolve(__dirname, 'src/compass.ts'),
         name: 'compass',
-        fileName: 'maplibre-compass-pro',
+        fileName: 'compass',
       },
       rollupOptions: {
         external: ['maplibre-gl'],
       },
       outDir: 'dist',
     },
+    ...(command === 'build' && {
+      plugins: [
+        dts({
+          insertTypesEntry: true,
+        }),
+      ],
+    }),
   }
 })
