@@ -8,6 +8,7 @@ tests/
 *.ts
 *.tsx
 src/
+public/
 
 # config
 tsconfig.json
@@ -20,8 +21,8 @@ index.html
 # Exclude any other development-specific files or directories
 
 # Include necessary files
-!package.json
-!README.md
-!license
 !dist/
+!README.md
+!package.json
 !index.d.ts
+!license
