@@ -14,7 +14,7 @@
       "require": "./dist/compass.umd.cjs"
     }
   },
-  "types": "dist/compass.d.ts",
+  "types": "index.d.ts",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

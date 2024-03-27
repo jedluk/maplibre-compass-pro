@@ -14,12 +14,12 @@ export default defineConfig(({ command }) => {
       rollupOptions: {
         external: ['maplibre-gl'],
       },
-      outDir: 'dist',
     },
     ...(command === 'build' && {
       plugins: [
         dts({
-          insertTypesEntry: true,
+          rollupTypes: true,
+          outDir: __dirname,
         }),
       ],
     }),
