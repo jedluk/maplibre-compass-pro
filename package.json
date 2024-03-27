@@ -1,8 +1,19 @@
 {
-  "name": "map_compass",
+  "name": "maplibre-compass-pro",
   "version": "1.0.0",
   "description": "Professional compass for maplibre-based projects",
-  "main": "index.js",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/compass.cjs",
+  "module": "./dist/compass.js",
+  "exports": {
+    ".": {
+      "import": "./dist/compass.js",
+      "require": "./dist/compass.umd.cjs"
+    }
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

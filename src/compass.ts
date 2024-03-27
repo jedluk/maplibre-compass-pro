@@ -1,5 +1,5 @@
 import './compass.css'
-import { IControl, Map } from 'maplibre-gl'
+import { type IControl, type Map } from 'maplibre-gl'
 
 export type CompassProps = {
     size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
