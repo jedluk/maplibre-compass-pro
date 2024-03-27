@@ -5,7 +5,7 @@ import { Compass } from './compass';
 
 const map = new maplibregl.Map({
   container: 'map',
-  style: '/mapStyleDev.json',
+  style: '/mapStyle.json',
   center: [14.5, 53.4],
   zoom: 11
 });
