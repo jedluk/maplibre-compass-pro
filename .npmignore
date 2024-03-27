@@ -1,0 +1,27 @@
+# Development related
+.vscode/
+.idea/
+node_modules/
+tests/
+
+# Source files
+*.ts
+*.tsx
+src/
+
+# config
+tsconfig.json
+vite.config.js
+pnpm-lock.yaml
+index.html
+.gitignore
+.nvmrc
+
+# Exclude any other development-specific files or directories
+
+# Include necessary files
+!package.json
+!README.md
+!license
+!dist/
+!index.d.ts

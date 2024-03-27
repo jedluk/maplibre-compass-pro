@@ -14,5 +14,5 @@ const map = new maplibregl.Map({
 const sizes = ['xs', 'sm', 'md', 'lg', 'xl'] as const
 
 sizes.forEach(size => {
-  map.addControl(new Compass({ size, visualizePitch: false }), 'bottom-left')
+  map.addControl(new Compass({ size, visualizePitch: true }), 'bottom-left')
 })

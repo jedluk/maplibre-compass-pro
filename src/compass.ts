@@ -14,7 +14,7 @@ export class Compass implements IControl {
     compassElement?: HTMLDivElement
     customClick?: () => void
 
-    constructor({ size = 'md', visualizePitch = false, onClick }: CompassProps) {
+    constructor({ size = 'md', visualizePitch = false, onClick }: CompassProps = {}) {
         this.size = size
         this.visualizePitch = visualizePitch
         this.customClick = onClick
@@ -39,13 +39,13 @@ export class Compass implements IControl {
     changeSize = (size: NonNullable<CompassProps['size']>) => {
         this.size = size
         this.compassElement?.setAttribute('data-size', this.size)
+        this.compassElement?.parentElement?.setAttribute('data-size', this.size)
     }
 
     handleClick = () => {
         if (this.customClick) {
             this.customClick()
         } else {
-            this._map?.resetNorth()
             this._map?.resetNorthPitch()
         }
     }

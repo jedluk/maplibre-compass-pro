@@ -25,7 +25,7 @@ const map = new maplibregl.Map({
   zoom: 11,
 })
 
-const compass = new Compass({ size: 'md', visualizePitch: false })
+const compass = new Compass({ size: 'sm' }) // see compass props below
 map.addControl(compass, 'bottom-left')
 ```
 
@@ -33,8 +33,10 @@ Compass props:
 
 ```ts
 type CompassProps = {
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
-  visualizePitch?: boolean
-  onClick?: () => void
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' // default 'md'
+  visualizePitch?: boolean // default false
+  onClick?: () => void // default map.resetNorthPitch
 }
 ```
+
+You can omit props object so that all defaults will be used.
