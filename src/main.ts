@@ -5,11 +5,14 @@ import { Compass } from './compass';
 
 const map = new maplibregl.Map({
   container: 'map',
-  style: '/mapStyle.json',
-  center: [14.5, 53.4],
+  style: '/mapStyleDev.json',
+  center: [21.017532, 52.237049],
   zoom: 11
 });
 
 
-const compass = new Compass({ size: 'md', visualizePitch: false })
-map.addControl(compass, 'bottom-left')
+const sizes = ['xs', 'sm', 'md', 'lg', 'xl'] as const
+
+sizes.forEach(size => {
+  map.addControl(new Compass({ size, visualizePitch: false }), 'bottom-left')
+})

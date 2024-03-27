@@ -1,6 +1,6 @@
 # Maplibre compass pro
 
-Professional compass for all kind of maplibre-based maps, inspired by Jack Sparrow's compass.
+Professional, good looking compass, suitable for use in all kinds of maplibre-based projects, inspired by Jack Sparrow's compass.
 
 ![demo](./demo.png)
 

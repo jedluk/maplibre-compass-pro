@@ -6,4 +6,10 @@ body {
 .maplibregl-ctrl-bottom-left {
     left: 10px;
     bottom: 10px;
+    display: flex;
+    align-items: flex-end;
+}
+
+.maplibregl-ctrl-bottom-left .compass-pro {
+    margin-right: 0.5rem;
 }
