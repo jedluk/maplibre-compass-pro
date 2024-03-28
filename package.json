@@ -6,12 +6,16 @@
   "files": [
     "dist"
   ],
-  "main": "./dist/compass.cjs",
-  "module": "./dist/compass.js",
+  "main": "./dist/compass.js",
+  "module": "./dist/compass.umd.cjs",
   "exports": {
     ".": {
       "import": "./dist/compass.js",
       "require": "./dist/compass.umd.cjs"
+    },
+    "./dist/style.css": {
+      "import": "./dist/style.css",
+      "require": "./dist/style.css"
     }
   },
   "types": "index.d.ts",
