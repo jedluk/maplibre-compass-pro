@@ -5,9 +5,8 @@ node_modules/
 tests/
 
 # Source files
-*.ts
-*.tsx
-src/
+src/**/*.ts
+src/**/*.tsx
 public/
 
 # config

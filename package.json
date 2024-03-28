@@ -4,7 +4,8 @@
   "description": "Professional compass for maplibre-based projects",
   "type": "module",
   "files": [
-    "dist"
+    "dist",
+    "index.d.ts"
   ],
   "main": "./dist/compass.js",
   "module": "./dist/compass.umd.cjs",
