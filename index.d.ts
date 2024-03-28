@@ -1,3 +1,5 @@
+/// <reference types="maplibre-gl" />
+
 import { IControl } from 'maplibre-gl';
 import { Map as Map_2 } from 'maplibre-gl';
 

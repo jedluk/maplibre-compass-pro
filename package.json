@@ -1,6 +1,6 @@
 {
   "name": "maplibre-compass-pro",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "Professional compass for maplibre-based projects",
   "type": "module",
   "files": [
@@ -34,8 +34,8 @@
   },
   "keywords": [
     "compass",
-    "maplibre",
-    "mapbox"
+    "maps",
+    "maplibre"
   ],
   "author": {
     "name": "Jedrzej Lukasiuk",

@@ -15,8 +15,9 @@ Main features:
 ## Integration with maplibre
 
 ```js
+import 'maplibre-compass-pro/dist/style.css'
 import maplibregl from 'maplibre-gl'
-import { Compass } from './compass'
+import { Compass } from 'maplibre-compass-pro'
 
 const map = new maplibregl.Map({
   container: 'map',
