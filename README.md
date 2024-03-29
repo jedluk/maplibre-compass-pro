@@ -1,4 +1,4 @@
-# Maplibre compass pro
+# Maplibre compass pro [![npm](https://img.shields.io/npm/v/maplibre-compass-pro.svg)](https://www.npmjs.com/package/maplibre-compass-pro) [![npm downloads](https://img.shields.io/npm/dm/maplibre-compass-pro.svg)](https://www.npmjs.com/package/maplibre-compass-pro)
 
 Professional, good looking compass, suitable for use in all kinds of maplibre-based projects, inspired by Jack Sparrow's compass.
 
@@ -45,6 +45,6 @@ type CompassProps = {
 
 You can omit props object so that all defaults will be used.
 
-## React integration
+## Integration with React
 
 If you're working in React environment consider using [react-map-gl](https://visgl.github.io/react-map-gl/) as maplibre wrapper, together with [map-gl-compass-pro](https://www.npmjs.com/package/map-gl-compass-pro). As for now there are tiny differences between those 2 packages (in view only) - but they will be aligned soon. It's also possible to wrap maplibre-compass-pro with [use-control hook](https://visgl.github.io/react-map-gl/docs/api-reference/use-control).
