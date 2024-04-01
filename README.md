@@ -65,7 +65,7 @@ export function Compass() {
 This component has to be a child of Map component.
 ## Placement
 
-Compass position is determined by second argument of addControl function. You can pick on of:  *top-left*, *top-right*, *bottom-left*, and *bottom-right*. Default position is *bottom-left*. If you want to move the compass away from the corner please override maplibre class, like below:
+Compass position is determined by second argument of addControl function. You can pick one of:  *top-left*, *top-right*, *bottom-left*, and *bottom-right*. Default position is *bottom-left*. If you want to move the compass away from the corner please override maplibre class, like below:
 
 ```css
 .maplibregl-ctrl-bottom-left {
