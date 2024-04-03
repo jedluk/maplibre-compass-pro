@@ -52,6 +52,6 @@ jobs:
       with:
         node-version: 20.x
 
-    run: pnpm build
+    - run: pnpm build
   
 
