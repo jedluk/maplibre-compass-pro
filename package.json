@@ -1,63 +1,63 @@
 {
-	"name": "maplibre-compass-pro",
-	"version": "0.1.0",
-	"description": "Professional compass for maplibre-based projects",
-	"type": "module",
-	"files": [
-		"dist",
-		"index.d.ts"
-	],
-	"main": "./dist/compass.js",
-	"module": "./dist/compass.umd.cjs",
-	"exports": {
-		".": {
-			"import": "./dist/compass.js",
-			"require": "./dist/compass.umd.cjs"
-		},
-		"./dist/style.css": {
-			"import": "./dist/style.css",
-			"require": "./dist/style.css"
-		}
-	},
-	"types": "index.d.ts",
-	"scripts": {
-		"dev": "vite",
-		"build": "tsc && vite build",
-		"prettier:check": "prettier ./src --check",
-		"prettier:clean": "prettier ./src --write",
-		"preview": "vite preview"
-	},
-	"engineStrict": true,
-	"engines": {
-		"node": "20",
-		"npm": "10"
-	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/jedluk/maplibre-compass-pro"
-	},
-	"bugs": {
-		"url": "https://github.com/jedluk/maplibre-compass-pro/issues"
-	},
-	"keywords": [
-		"compass",
-		"maps",
-		"maplibre"
-	],
-	"author": {
-		"name": "Jedrzej Lukasiuk",
-		"email": "jedrzej.lukasiuk@gmail.com",
-		"url": "https://lukasi.uk"
-	},
-	"license": "MIT",
-	"peerDependencies": {
-		"maplibre-gl": ">3.0.0"
-	},
-	"devDependencies": {
-		"maplibre-gl": "^4.1.0",
-		"prettier": "^3.2.5",
-		"typescript": "^5.4.2",
-		"vite": "^5.1.5",
-		"vite-plugin-dts": "^3.8.0"
-	}
+  "name": "maplibre-compass-pro",
+  "version": "0.1.0",
+  "description": "Professional compass for maplibre-based projects",
+  "type": "module",
+  "files": [
+    "dist",
+    "index.d.ts"
+  ],
+  "main": "./dist/compass.js",
+  "module": "./dist/compass.umd.cjs",
+  "exports": {
+    ".": {
+      "import": "./dist/compass.js",
+      "require": "./dist/compass.umd.cjs"
+    },
+    "./dist/style.css": {
+      "import": "./dist/style.css",
+      "require": "./dist/style.css"
+    }
+  },
+  "types": "index.d.ts",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "prettier:check": "prettier ./src --check",
+    "prettier:clean": "prettier ./src --write",
+    "preview": "vite preview"
+  },
+  "engineStrict": true,
+  "engines": {
+    "node": "20",
+    "npm": "10"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jedluk/maplibre-compass-pro"
+  },
+  "bugs": {
+    "url": "https://github.com/jedluk/maplibre-compass-pro/issues"
+  },
+  "keywords": [
+    "compass",
+    "maps",
+    "maplibre"
+  ],
+  "author": {
+    "name": "Jedrzej Lukasiuk",
+    "email": "jedrzej.lukasiuk@gmail.com",
+    "url": "https://lukasi.uk"
+  },
+  "license": "MIT",
+  "peerDependencies": {
+    "maplibre-gl": ">3.0.0"
+  },
+  "devDependencies": {
+    "maplibre-gl": "^4.1.0",
+    "prettier": "^3.2.5",
+    "typescript": "^5.4.2",
+    "vite": "^5.1.5",
+    "vite-plugin-dts": "^3.8.0"
+  }
 }
