@@ -1,5 +1,6 @@
 import './compass.css'
 import { type IControl, type Map } from 'maplibre-gl'
+import { DIRECTION_ICONS } from './icons'
 
 export type CompassProps = {
 	size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
@@ -11,10 +12,11 @@ export type CompassProps = {
 export class Compass implements IControl {
 	_map?: Map
 	size: NonNullable<CompassProps['size']>
+	icons: typeof DIRECTION_ICONS
 	visualizePitch: boolean
 	literals: boolean
 	compassElement?: HTMLDivElement
-	literalElement?: HTMLImageElement
+	innerFace?: HTMLImageElement
 	customClick?: () => void
 
 	constructor({
@@ -27,6 +29,7 @@ export class Compass implements IControl {
 		this.visualizePitch = visualizePitch
 		this.literals = literals
 		this.customClick = onClick
+		this.icons = DIRECTION_ICONS
 	}
 
 	onAdd(map: Map): HTMLElement {
@@ -70,19 +73,21 @@ export class Compass implements IControl {
 			const pitch = this._map.getPitch()
 			transform += ` rotateX(${pitch}deg)`
 		}
-		if (this.literals && this.literalElement) {
+		const shieldElement = this.compassElement.querySelector('.inner-face')
+		if (this.literals && shieldElement instanceof Element) {
+			// remove previous icon if exists
+			if (shieldElement.firstChild) {
+				shieldElement.removeChild(shieldElement.firstChild)
+			}
+
 			if (bearing > -135 && bearing < -45) {
-				this.literalElement.src = '/east.svg'
-				this.literalElement.style.transform = 'rotate(90deg)'
+				shieldElement.appendChild(this.icons.east)
 			} else if (bearing >= -45 && bearing < 45) {
-				this.literalElement.src = '/north.svg'
-				this.literalElement.style.transform = ''
+				shieldElement.appendChild(this.icons.north)
 			} else if (bearing >= 45 && bearing < 135) {
-				this.literalElement.src = '/west.svg'
-				this.literalElement.style.transform = 'rotate(-90deg)'
+				shieldElement.appendChild(this.icons.west)
 			} else {
-				this.literalElement.src = '/south.svg'
-				this.literalElement.style.transform = 'rotate(180deg)'
+				shieldElement.appendChild(this.icons.south)
 			}
 		}
 		this.compassElement.style.transform = transform
@@ -112,10 +117,7 @@ export class Compass implements IControl {
 		children.push(innerFace)
 
 		if (this.literals) {
-			const img = document.createElement('img')
-			img.src = '/north.svg'
-			this.literalElement = img
-			innerFace.appendChild(img)
+			innerFace.appendChild(this.icons.north)
 		} else {
 			const needleNorth = document.createElement('div')
 			needleNorth.classList.add('needlde-north')
