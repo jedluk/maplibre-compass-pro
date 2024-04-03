@@ -23,6 +23,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "prettier:check": "prettier ./src --check",
+    "prettier:clean": "prettier ./src --write",
     "preview": "vite preview"
   },
   "engineStrict": true,
@@ -53,6 +55,7 @@
   },
   "devDependencies": {
     "maplibre-gl": "^4.1.0",
+    "prettier": "^3.2.5",
     "typescript": "^5.4.2",
     "vite": "^5.1.5",
     "vite-plugin-dts": "^3.8.0"
