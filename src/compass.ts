@@ -43,10 +43,7 @@ export class Compass implements IControl {
 	changeSize = (size: NonNullable<CompassProps['size']>) => {
 		this.size = size
 		this.compassElement?.setAttribute('data-size', this.size)
-		this.compassElement?.parentElement?.setAttribute(
-			'data-size',
-			this.size,
-		)
+		this.compassElement?.parentElement?.setAttribute('data-size', this.size)
 	}
 
 	handleClick = () => {
