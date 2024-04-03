@@ -10,7 +10,7 @@ function createSVGBase(invertColors = false): [SVGSVGElement, SVGPathElement] {
 
 	iconPath.setAttribute('stroke-linecap', 'round')
 	iconPath.setAttribute('stroke-linejoin', 'round')
-	iconPath.setAttribute('stroke-width', '0.8')
+	iconPath.setAttribute('stroke-width', '2')
 
 	const [stroke, fill] = invertColors
 		? [COLOR_RED, COLOR_WHITE]
