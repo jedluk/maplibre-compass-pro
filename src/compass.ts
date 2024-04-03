@@ -5,7 +5,7 @@ import { mapBearingToIcon } from './lib'
 
 export type CompassProps = {
 	size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
-	showDirections?: boolean
+	displayDirection?: boolean
 	visualizePitch?: boolean
 	onClick?: () => void
 }
@@ -15,7 +15,7 @@ export class Compass implements IControl {
 	size: NonNullable<CompassProps['size']>
 	icons: typeof DIRECTION_ICONS
 	visualizePitch: boolean
-	showDirections: boolean
+	displayDirection: boolean
 	compassElement?: HTMLDivElement
 	innerFace?: HTMLImageElement
 	customClick?: () => void
@@ -23,12 +23,12 @@ export class Compass implements IControl {
 	constructor({
 		size = 'md',
 		visualizePitch = false,
-		showDirections = false,
+		displayDirection = false,
 		onClick,
 	}: CompassProps = {}) {
 		this.size = size
 		this.visualizePitch = visualizePitch
-		this.showDirections = showDirections
+		this.displayDirection = displayDirection
 		this.customClick = onClick
 		this.icons = DIRECTION_ICONS
 	}
@@ -74,8 +74,9 @@ export class Compass implements IControl {
 			const pitch = this._map.getPitch()
 			transform += ` rotateX(${pitch}deg)`
 		}
+		this.compassElement.style.transform = transform
 
-		if (this.showDirections) {
+		if (this.displayDirection) {
 			const shieldElement = this.compassElement.lastElementChild
 			if (!shieldElement) {
 				return
@@ -87,7 +88,6 @@ export class Compass implements IControl {
 				shieldElement.appendChild(icon)
 			}
 		}
-		this.compassElement.style.transform = transform
 	}
 
 	createCompassElement = (): HTMLElement => {
@@ -113,7 +113,7 @@ export class Compass implements IControl {
 		innerFace.classList.add('inner-face')
 		children.push(innerFace)
 
-		if (this.showDirections) {
+		if (this.displayDirection) {
 			innerFace.appendChild(this.icons.north)
 		} else {
 			const needleNorth = document.createElement('div')
