@@ -4,10 +4,10 @@ body {
 }
 
 .maplibregl-ctrl-bottom-left {
-    left: 10px;
+    align-items: flex-end;
     bottom: 10px;
     display: flex;
-    align-items: flex-end;
+    left: 10px;
 }
 
 .maplibregl-ctrl-bottom-left .compass-pro {

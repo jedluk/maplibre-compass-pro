@@ -23,8 +23,10 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "prettier:check": "prettier ./src --check",
-    "prettier:clean": "prettier ./src --write",
+    "lint:code": "prettier ./src --check",
+    "lint:code-fix": "prettier ./src --write",
+    "lint:styles": "stylelint \"src/**/*.css\"",
+    "lint:styles-fix": "stylelint \"src/**/*.css\" --fix",
     "preview": "vite preview"
   },
   "engineStrict": true,
@@ -56,6 +58,9 @@
   "devDependencies": {
     "maplibre-gl": "^4.1.0",
     "prettier": "^3.2.5",
+    "stylelint": "^16.3.1",
+    "stylelint-config-standard": "^36.0.0",
+    "stylelint-order": "^6.0.4",
     "typescript": "^5.4.2",
     "vite": "^5.1.5",
     "vite-plugin-dts": "^3.8.0"
