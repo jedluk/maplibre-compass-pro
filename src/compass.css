@@ -96,11 +96,31 @@
     top: -20%;
 }
 
-.needle:nth-of-type(1) {
+.compass-pro .needle:nth-of-type(1) {
     --width: 2px;
     --rotation: 0deg;
 
     background-color: var(--color-compass-north-needle);
+}
+
+.compass-pro .needle:nth-of-type(2) {
+    --rotation: 30deg;
+}
+
+.compass-pro .needle:nth-of-type(3) {
+    --rotation: 60deg;
+}
+
+.compass-pro .needle:nth-of-type(4) {
+    --rotation: 90deg;
+}
+
+.compass-pro .needle:nth-of-type(5) {
+    --rotation: 120deg;
+}
+
+.compass-pro .needle:nth-of-type(6) {
+    --rotation: 150deg;
 }
 
 .compass-pro[data-size="sm"] .needle:nth-of-type(1),
@@ -111,26 +131,6 @@
 .compass-pro[data-size="lg"] .needle:nth-of-type(1),
 .compass-pro[data-size="xl"] .needle:nth-of-type(1) {
     --width: 4px;
-}
-
-.needle:nth-of-type(2) {
-    --rotation: 30deg;
-}
-
-.needle:nth-of-type(3) {
-    --rotation: 60deg;
-}
-
-.needle:nth-of-type(4) {
-    --rotation: 90deg;
-}
-
-.needle:nth-of-type(5) {
-    --rotation: 120deg;
-}
-
-.needle:nth-of-type(6) {
-    --rotation: 150deg;
 }
 
 .compass-pro .inner-face {
