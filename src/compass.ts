@@ -1,10 +1,11 @@
 import './compass.css'
 import { type IControl, type Map } from 'maplibre-gl'
 import { DIRECTION_ICONS } from './icons'
+import { mapBearingToIcon } from './lib'
 
 export type CompassProps = {
 	size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
-	literals?: boolean
+	showDirections?: boolean
 	visualizePitch?: boolean
 	onClick?: () => void
 }
@@ -14,7 +15,7 @@ export class Compass implements IControl {
 	size: NonNullable<CompassProps['size']>
 	icons: typeof DIRECTION_ICONS
 	visualizePitch: boolean
-	literals: boolean
+	showDirections: boolean
 	compassElement?: HTMLDivElement
 	innerFace?: HTMLImageElement
 	customClick?: () => void
@@ -22,12 +23,12 @@ export class Compass implements IControl {
 	constructor({
 		size = 'md',
 		visualizePitch = false,
-		literals = false,
+		showDirections = false,
 		onClick,
 	}: CompassProps = {}) {
 		this.size = size
 		this.visualizePitch = visualizePitch
-		this.literals = literals
+		this.showDirections = showDirections
 		this.customClick = onClick
 		this.icons = DIRECTION_ICONS
 	}
@@ -73,21 +74,17 @@ export class Compass implements IControl {
 			const pitch = this._map.getPitch()
 			transform += ` rotateX(${pitch}deg)`
 		}
-		const shieldElement = this.compassElement.querySelector('.inner-face')
-		if (this.literals && shieldElement instanceof Element) {
-			// remove previous icon if exists
-			if (shieldElement.firstChild) {
-				shieldElement.removeChild(shieldElement.firstChild)
-			}
 
-			if (bearing > -135 && bearing < -45) {
-				shieldElement.appendChild(this.icons.east)
-			} else if (bearing >= -45 && bearing < 45) {
-				shieldElement.appendChild(this.icons.north)
-			} else if (bearing >= 45 && bearing < 135) {
-				shieldElement.appendChild(this.icons.west)
+		if (this.showDirections) {
+			const shieldElement = this.compassElement.lastElementChild
+			if (!shieldElement) {
+				return
+			}
+			const icon = mapBearingToIcon(bearing)
+			if (shieldElement.firstChild) {
+				shieldElement.replaceChild(icon, shieldElement.firstChild)
 			} else {
-				shieldElement.appendChild(this.icons.south)
+				shieldElement.appendChild(icon)
 			}
 		}
 		this.compassElement.style.transform = transform
@@ -116,7 +113,7 @@ export class Compass implements IControl {
 		innerFace.classList.add('inner-face')
 		children.push(innerFace)
 
-		if (this.literals) {
+		if (this.showDirections) {
 			innerFace.appendChild(this.icons.north)
 		} else {
 			const needleNorth = document.createElement('div')
