@@ -22,7 +22,7 @@ map.on('load', function () {
 	document
 		.getElementById('size-selector')
 		?.addEventListener('change', function (evt) {
-			const { value } = (evt.target as HTMLSelectElement)
+			const { value } = evt.target as HTMLSelectElement
 			compass.changeSize(value as NonNullable<CompassProps['size']>)
 		})
 	document
