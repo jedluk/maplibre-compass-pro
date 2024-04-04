@@ -86,6 +86,32 @@ export class Compass implements IControl {
 		}
 	}
 
+	toggle = () => {
+		if (!this.compassElement || !this._map) {
+			return
+		}
+		this.displayDirection = !this.displayDirection
+		if (this.displayDirection) {
+			const bearing = this._map.getBearing()
+			const directionIcon = mapBearingToIcon(-1 * bearing)
+			// remove needle
+			this.compassElement.lastChild?.remove()
+			// append to shield
+			this.compassElement.lastChild?.appendChild(directionIcon)
+		} else {
+			const shieldElement = this.compassElement.lastElementChild
+			shieldElement?.removeChild(shieldElement.firstChild as Node)
+			const needle = this.createNeedle()
+			this.compassElement.appendChild(needle)
+		}
+	}
+
+	createNeedle() {
+		const needleNorth = document.createElement('div')
+		needleNorth.classList.add('needlde-north')
+		return needleNorth
+	}
+
 	createCompassElement = (): HTMLElement => {
 		const container = document.createElement('div')
 		container.id = 'compass'
@@ -110,11 +136,11 @@ export class Compass implements IControl {
 		children.push(innerFace)
 
 		if (this.displayDirection) {
-			innerFace.appendChild(mapBearingToIcon(0))
+			const directionIcon = mapBearingToIcon(0)
+			innerFace.appendChild(directionIcon)
 		} else {
-			const needleNorth = document.createElement('div')
-			needleNorth.classList.add('needlde-north')
-			children.push(needleNorth)
+			const needle = this.createNeedle()
+			children.push(needle)
 		}
 
 		compass.append(...children)
