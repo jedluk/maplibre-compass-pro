@@ -13,6 +13,6 @@ const map = new maplibregl.Map({
 const sizes = ['xs', 'sm', 'md', 'lg', 'xl'] as const
 
 map.addControl(
-	new Compass({ size: 'md', visualizePitch: false, displayDirection: true }),
+	new Compass({ size: sizes[2], visualizePitch: false, displayDirection: true }),
 	'bottom-left',
 )

@@ -140,9 +140,13 @@
     border-style: double;
     border-width: 2px;
     display: grid;
-    height: 100%;
+    height: 90%;
+    left: 5%;
     opacity: 0.9;
     place-items: center;
+    position: relative;
+    top: 5%;
+    width: 90%;
     z-index: 1;
 }
 
@@ -179,6 +183,10 @@
 .compass-pro[data-size="lg"] .inner-face,
 .compass-pro[data-size="xl"] .inner-face {
     border-width: 5px;
+    height: 95%;
+    left: 2.5%;
+    top: 2.5%;
+    width: 95%;
 }
 
 .compass-pro .needlde-north {
