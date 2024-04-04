@@ -58,7 +58,7 @@ map.addControl(compass, 'bottom-left')
 // change compass size
 compass.changeSize('lg')
 
-// display cardinal directions instead of noddle
+// display cardinal directions instead of needle
 compass.toggle()
 // back to needle in 3 seconds
 setTimeout(() => {
