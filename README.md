@@ -12,6 +12,7 @@ Professional, good looking compass, suitable for use in all kinds of maplibre-ba
 - predefined sizes (from 'xs' to 'xl')
 - typescript support
 - possibility to visualize pitch
+- possibility to display cardinal directions
 - ease integration with maplibre-gl
 
 ## Integration with maplibre
@@ -23,31 +24,51 @@ import maplibregl from 'maplibre-gl'
 import { Compass } from 'maplibre-compass-pro'
 
 const map = new maplibregl.Map({
-  container: 'map',
-  style: '/mapStyle.json',
-  center: [14.5, 53.4],
-  zoom: 11,
+	container: 'map',
+	style: '/mapStyle.json',
+	center: [14.5, 53.4],
+	zoom: 11,
 })
 
 const compass = new Compass({ size: 'sm' })
 map.addControl(compass, 'bottom-left')
 ```
 
-Compass props:
+Remember to import compass styles 🙏🙏🙏 Compass props:
 
 ```ts
 type CompassProps = {
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' // default 'md'
-  visualizePitch?: boolean // default false
-  onClick?: () => void // default map.resetNorthPitch
+	size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' // default 'md'
+	visualizePitch?: boolean // default false
+	displayDirections?: boolean // default false (use cardinal directions instead of needle)
+	onClick?: () => void // default map.resetNorthPitch
 }
 ```
 
 You can omit props object so that all defaults will be used.
 
+## Using compass API
+
+It's possible to update compass size, or toggle between needle/cardinal directions using its API. See code snippet below:
+
+```js
+const compass = new Compass({ size: 'sm' }) // set size 'sm' as initial value, needle is used as default
+map.addControl(compass, 'bottom-left')
+
+// change compass size
+compass.changeSize('lg')
+
+// display cardinal directions instead of noddle
+compass.toggle()
+// back to needle in 3 seconds
+setTimeout(() => {
+	compass.toggle()
+}, 3000)
+```
+
 ## Integration with React
 
-If you're working in React environment consider using [react-map-gl](https://visgl.github.io/react-map-gl/) as maplibre wrapper, together with [map-gl-compass-pro](https://www.npmjs.com/package/map-gl-compass-pro). As for now there are tiny differences between those 2 packages (in view only) - but they will be aligned soon. It's also possible to wrap maplibre-compass-pro with [use-control hook](https://visgl.github.io/react-map-gl/docs/api-reference/use-control). 
+If you're working in React environment consider using [react-map-gl](https://visgl.github.io/react-map-gl/) as maplibre wrapper, together with [map-gl-compass-pro](https://www.npmjs.com/package/map-gl-compass-pro). As for now there are tiny differences between those 2 packages (in view only) - but they will be aligned soon. It's also possible to wrap maplibre-compass-pro with [use-control hook](https://visgl.github.io/react-map-gl/docs/api-reference/use-control).
 
 ```tsx
 import 'maplibre-compass-pro/dist/style.css'
@@ -56,20 +77,22 @@ import { Compass as CompassPro } from 'maplibre-compass-pro'
 import { useControl } from 'react-map-gl'
 
 export function Compass() {
-  useControl(() => new CompassPro({ size: 'md' }), {
-    position: 'bottom-left'
-  })
-  return null
+	useControl(() => new CompassPro({ size: 'md', displayDirections: true }), {
+		position: 'bottom-left',
+	})
+	return null
 }
 ```
+
 This component has to be a child of Map component.
+
 ## Placement
 
-Compass position is determined by second argument of addControl function. You can pick one of:  *top-left*, *top-right*, *bottom-left*, and *bottom-right*. Default position is *bottom-left*. If you want to move the compass away from the corner please override maplibre class, like below:
+Compass position is determined by second argument of addControl function. You can pick one of: _top-left_, _top-right_, _bottom-left_, and _bottom-right_. Default position is _bottom-left_. If you want to move the compass away from the corner please override maplibre class, like below:
 
 ```css
 .maplibregl-ctrl-bottom-left {
-  left: 10px;
-  bottom: 10px;
+	left: 10px;
+	bottom: 10px;
 }
 ```

@@ -25,10 +25,8 @@
         inset -2px -2px 5px rgb(67 67 67 / 50%),
         2px 2px 5px rgb(0 0 0 / 30%);
     height: var(--compass-size);
-    perspective: ;
     pointer-events: all;
     position: relative;
-    transform: rotate(0deg);
     transform-origin: center;
     width: var(--compass-size);
 }
@@ -113,6 +111,8 @@
 
 .compass-pro .needle:nth-of-type(4) {
     --rotation: 90deg;
+
+    outline: 1px solid var(--color-compass-north-needle);
 }
 
 .compass-pro .needle:nth-of-type(5) {
@@ -139,13 +139,40 @@
     border-radius: 50%;
     border-style: double;
     border-width: 2px;
-    height: 88%;
-    left: 6%;
+    display: grid;
+    height: 90%;
+    left: 5%;
     opacity: 0.9;
-    position: absolute;
-    top: 6%;
-    width: 88%;
+    place-items: center;
+    position: relative;
+    top: 5%;
+    width: 90%;
     z-index: 1;
+}
+
+.compass-pro[data-size="xs"] .inner-face svg {
+    height: 12px;
+    width: 12px;
+}
+
+.compass-pro[data-size="sm"] .inner-face svg {
+    height: 18px;
+    width: 18px;
+}
+
+.compass-pro[data-size="md"] .inner-face svg {
+    height: 24px;
+    width: 24px;
+}
+
+.compass-pro[data-size="lg"] .inner-face svg {
+    height: 30px;
+    width: 30px;
+}
+
+.compass-pro[data-size="xl"] .inner-face svg {
+    height: 36px;
+    width: 36px;
 }
 
 .compass-pro[data-size="sm"] .inner-face,
@@ -156,10 +183,10 @@
 .compass-pro[data-size="lg"] .inner-face,
 .compass-pro[data-size="xl"] .inner-face {
     border-width: 5px;
-    height: 94%;
-    left: 3%;
-    top: 3%;
-    width: 94%;
+    height: 95%;
+    left: 2.5%;
+    top: 2.5%;
+    width: 95%;
 }
 
 .compass-pro .needlde-north {

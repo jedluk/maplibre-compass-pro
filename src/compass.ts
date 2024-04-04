@@ -1,8 +1,10 @@
 import './compass.css'
 import { type IControl, type Map } from 'maplibre-gl'
+import { mapBearingToIcon } from './lib'
 
 export type CompassProps = {
 	size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+	displayDirection?: boolean
 	visualizePitch?: boolean
 	onClick?: () => void
 }
@@ -11,16 +13,19 @@ export class Compass implements IControl {
 	_map?: Map
 	size: NonNullable<CompassProps['size']>
 	visualizePitch: boolean
+	displayCardinalDirection: boolean
 	compassElement?: HTMLDivElement
 	customClick?: () => void
 
 	constructor({
 		size = 'md',
 		visualizePitch = false,
+		displayDirection = false,
 		onClick,
 	}: CompassProps = {}) {
 		this.size = size
 		this.visualizePitch = visualizePitch
+		this.displayCardinalDirection = displayDirection
 		this.customClick = onClick
 	}
 
@@ -58,6 +63,7 @@ export class Compass implements IControl {
 		if (!this._map || !this.compassElement) {
 			return
 		}
+
 		const bearing = -1 * this._map.getBearing()
 		let transform = `rotate(${bearing}deg)`
 		if (this.visualizePitch) {
@@ -65,6 +71,45 @@ export class Compass implements IControl {
 			transform += ` rotateX(${pitch}deg)`
 		}
 		this.compassElement.style.transform = transform
+
+		if (this.displayCardinalDirection) {
+			const shieldElement = this.compassElement.lastElementChild
+			if (!shieldElement) {
+				return
+			}
+			const icon = mapBearingToIcon(bearing)
+			if (shieldElement.firstChild) {
+				shieldElement.replaceChild(icon, shieldElement.firstChild)
+			} else {
+				shieldElement.appendChild(icon)
+			}
+		}
+	}
+
+	toggle = () => {
+		if (!this.compassElement || !this._map) {
+			return
+		}
+		this.displayCardinalDirection = !this.displayCardinalDirection
+		if (this.displayCardinalDirection) {
+			const bearing = this._map.getBearing()
+			const directionIcon = mapBearingToIcon(-1 * bearing)
+			// remove needle
+			this.compassElement.lastChild?.remove()
+			// append to shield
+			this.compassElement.lastChild?.appendChild(directionIcon)
+		} else {
+			const shieldElement = this.compassElement.lastElementChild
+			shieldElement?.removeChild(shieldElement.firstChild as Node)
+			const needle = this.createNeedle()
+			this.compassElement.appendChild(needle)
+		}
+	}
+
+	createNeedle() {
+		const needleNorth = document.createElement('div')
+		needleNorth.classList.add('needlde-north')
+		return needleNorth
 	}
 
 	createCompassElement = (): HTMLElement => {
@@ -78,21 +123,27 @@ export class Compass implements IControl {
 		compass.setAttribute('data-size', this.size)
 		compass.addEventListener('click', this.handleClick)
 
-		const needles: HTMLElement[] = []
+		const children: HTMLElement[] = []
 
 		for (let i = 1; i <= 6; i++) {
 			const needle = document.createElement('div')
 			needle.classList.add('needle')
-			needles.push(needle)
+			children.push(needle)
 		}
 
 		const innerFace = document.createElement('div')
 		innerFace.classList.add('inner-face')
+		children.push(innerFace)
 
-		const needleNorth = document.createElement('div')
-		needleNorth.classList.add('needlde-north')
+		if (this.displayCardinalDirection) {
+			const directionIcon = mapBearingToIcon(0)
+			innerFace.appendChild(directionIcon)
+		} else {
+			const needle = this.createNeedle()
+			children.push(needle)
+		}
 
-		compass.append(...needles, needleNorth, innerFace)
+		compass.append(...children)
 		this.compassElement = compass
 		container.append(compass)
 

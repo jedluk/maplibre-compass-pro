@@ -1,7 +1,7 @@
 import 'maplibre-gl/dist/maplibre-gl.css'
-import './maplibre.css'
+import './main.css'
 import maplibregl from 'maplibre-gl'
-import { Compass } from './compass'
+import { Compass, CompassProps } from './compass'
 
 const map = new maplibregl.Map({
 	container: 'map',
@@ -10,8 +10,24 @@ const map = new maplibregl.Map({
 	zoom: 11,
 })
 
-const sizes = ['xs', 'sm', 'md', 'lg', 'xl'] as const
+const compass = new Compass({
+	size: 'md',
+	visualizePitch: false,
+	displayDirection: false,
+})
 
-sizes.slice(2, 3).forEach((size) => {
-	map.addControl(new Compass({ size, visualizePitch: true }), 'bottom-left')
+map.addControl(compass, 'bottom-left')
+
+map.on('load', function () {
+	document
+		.getElementById('size-selector')
+		?.addEventListener('change', function (evt) {
+			const { value } = evt.target as HTMLSelectElement
+			compass.changeSize(value as NonNullable<CompassProps['size']>)
+		})
+	document
+		.getElementById('kind-selector')
+		?.addEventListener('change', function (evt) {
+			compass.toggle()
+		})
 })

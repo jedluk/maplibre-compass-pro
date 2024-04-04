@@ -9,7 +9,21 @@
 </head>
 
 <body>
-    <div id="map" style='width: 100%; height: 100vh'></div>
+    <div id="map" style="width: 100%; height: 100vh"></div>
+    <div class="panel">
+        <select id="size-selector">
+            <option value="xs">size: xs</option>
+            <option value="sm">size: sm</option>
+            <option selected value="md">size: md</option>
+            <option value="lg">size: lg</option>
+            <option value="xl">size: xl</option>
+        </select>
+        <select id="kind-selector">
+            <option selected>needle</option>
+            <option>cardinal directions</option>
+        </select>
+    </div>
+
     <script type="module" src="/src/main.ts"></script>
 </body>
 
