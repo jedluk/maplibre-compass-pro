@@ -1,6 +1,5 @@
 import './compass.css'
 import { type IControl, type Map } from 'maplibre-gl'
-import { DIRECTION_ICONS } from './icons'
 import { mapBearingToIcon } from './lib'
 
 export type CompassProps = {
@@ -13,7 +12,6 @@ export type CompassProps = {
 export class Compass implements IControl {
 	_map?: Map
 	size: NonNullable<CompassProps['size']>
-	icons: typeof DIRECTION_ICONS
 	visualizePitch: boolean
 	displayDirection: boolean
 	compassElement?: HTMLDivElement
@@ -30,7 +28,6 @@ export class Compass implements IControl {
 		this.visualizePitch = visualizePitch
 		this.displayDirection = displayDirection
 		this.customClick = onClick
-		this.icons = DIRECTION_ICONS
 	}
 
 	onAdd(map: Map): HTMLElement {
@@ -114,7 +111,7 @@ export class Compass implements IControl {
 		children.push(innerFace)
 
 		if (this.displayDirection) {
-			innerFace.appendChild(this.icons.north)
+			innerFace.appendChild(mapBearingToIcon(0))
 		} else {
 			const needleNorth = document.createElement('div')
 			needleNorth.classList.add('needlde-north')
