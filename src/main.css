@@ -13,3 +13,14 @@ body {
 .maplibregl-ctrl-bottom-left .compass-pro {
     margin-right: 0.5rem;
 }
+
+.panel {
+    display: flex;
+    left: 10px;
+    position: absolute;
+    top: 10px;
+}
+
+.panel select {
+    margin-right: 5px;
+}
