@@ -25,10 +25,8 @@
         inset -2px -2px 5px rgb(67 67 67 / 50%),
         2px 2px 5px rgb(0 0 0 / 30%);
     height: var(--compass-size);
-    perspective: ;
     pointer-events: all;
     position: relative;
-    transform: rotate(0deg);
     transform-origin: center;
     width: var(--compass-size);
 }
@@ -113,6 +111,8 @@
 
 .compass-pro .needle:nth-of-type(4) {
     --rotation: 90deg;
+
+    outline: 1px solid var(--color-compass-north-needle);
 }
 
 .compass-pro .needle:nth-of-type(5) {
@@ -133,28 +133,6 @@
     --width: 4px;
 }
 
-.needle:nth-of-type(2) {
-    --rotation: 30deg;
-}
-
-.needle:nth-of-type(3) {
-    --rotation: 60deg;
-}
-
-.needle:nth-of-type(4) {
-    --rotation: 90deg;
-
-    outline: 1px solid var(--color-compass-north-needle);
-}
-
-.needle:nth-of-type(5) {
-    --rotation: 120deg;
-}
-
-.needle:nth-of-type(6) {
-    --rotation: 150deg;
-}
-
 .compass-pro .inner-face {
     background: var(--color-compass-background);
     border-color: var(--color-compass-north-needle);
@@ -168,7 +146,7 @@
     z-index: 1;
 }
 
-.compass-pro[data-size="sm"] .inner-face svg {
+.compass-pro[data-size="xs"] .inner-face svg {
     height: 12px;
     width: 12px;
 }
