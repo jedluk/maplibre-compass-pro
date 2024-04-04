@@ -143,6 +143,7 @@
 
 .needle:nth-of-type(4) {
     --rotation: 90deg;
+
     outline: 1px solid var(--color-compass-north-needle);
 }
 
@@ -156,44 +157,40 @@
 
 .compass-pro .inner-face {
     background: var(--color-compass-background);
-    opacity: 0.9;
-    display: grid;
-    place-items: center;
-    border-radius: 50%;
-    border-width: 2px;
-    border-style: double;
     border-color: var(--color-compass-north-needle);
     border-radius: 50%;
     border-style: double;
     border-width: 2px;
-    height: 88%;
-    padding: 10%;
+    display: grid;
+    height: 100%;
+    opacity: 0.9;
+    place-items: center;
     z-index: 1;
 }
 
 .compass-pro[data-size="sm"] .inner-face svg {
-    width: 12px;
     height: 12px;
+    width: 12px;
 }
 
 .compass-pro[data-size="sm"] .inner-face svg {
-    width: 18px;
     height: 18px;
+    width: 18px;
 }
 
 .compass-pro[data-size="md"] .inner-face svg {
-    width: 24px;
     height: 24px;
+    width: 24px;
 }
 
 .compass-pro[data-size="lg"] .inner-face svg {
-    width: 30px;
     height: 30px;
+    width: 30px;
 }
 
 .compass-pro[data-size="xl"] .inner-face svg {
-    width: 36px;
     height: 36px;
+    width: 36px;
 }
 
 .compass-pro[data-size="sm"] .inner-face,
@@ -204,10 +201,6 @@
 .compass-pro[data-size="lg"] .inner-face,
 .compass-pro[data-size="xl"] .inner-face {
     border-width: 5px;
-    height: 94%;
-    left: 3%;
-    top: 3%;
-    width: 94%;
 }
 
 .compass-pro .needlde-north {
