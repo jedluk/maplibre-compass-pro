@@ -15,7 +15,6 @@ export class Compass implements IControl {
 	visualizePitch: boolean
 	displayDirection: boolean
 	compassElement?: HTMLDivElement
-	innerFace?: HTMLImageElement
 	customClick?: () => void
 
 	constructor({
