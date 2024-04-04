@@ -34,18 +34,37 @@ const compass = new Compass({ size: 'sm' })
 map.addControl(compass, 'bottom-left')
 ```
 
-Compass props:
+Remember to import compass styles 🙏🙏🙏 Compass props:
 
 ```ts
 type CompassProps = {
 	size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' // default 'md'
 	visualizePitch?: boolean // default false
-	displayDirections?: boolean // default false
+	displayDirections?: boolean // default false (use cardinal directions instead of needle)
 	onClick?: () => void // default map.resetNorthPitch
 }
 ```
 
 You can omit props object so that all defaults will be used.
+
+## Using compass API
+
+It's possible to update compass size, or toggle between needle/cardinal directions using its API. See code snippet below:
+
+```js
+const compass = new Compass({ size: 'sm' }) // set size 'sm' as initial value, needle is used as default
+map.addControl(compass, 'bottom-left')
+
+// change compass size
+compass.changeSize('lg')
+
+// display cardinal directions instead of noddle
+compass.toggle()
+// back to needle in 3 seconds
+setTimeout(() => {
+	compass.toggle()
+}, 3000)
+```
 
 ## Integration with React
 

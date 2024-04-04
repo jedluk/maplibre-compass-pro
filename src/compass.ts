@@ -13,7 +13,7 @@ export class Compass implements IControl {
 	_map?: Map
 	size: NonNullable<CompassProps['size']>
 	visualizePitch: boolean
-	displayDirection: boolean
+	displayCardinalDirection: boolean
 	compassElement?: HTMLDivElement
 	customClick?: () => void
 
@@ -25,7 +25,7 @@ export class Compass implements IControl {
 	}: CompassProps = {}) {
 		this.size = size
 		this.visualizePitch = visualizePitch
-		this.displayDirection = displayDirection
+		this.displayCardinalDirection = displayDirection
 		this.customClick = onClick
 	}
 
@@ -72,7 +72,7 @@ export class Compass implements IControl {
 		}
 		this.compassElement.style.transform = transform
 
-		if (this.displayDirection) {
+		if (this.displayCardinalDirection) {
 			const shieldElement = this.compassElement.lastElementChild
 			if (!shieldElement) {
 				return
@@ -90,8 +90,8 @@ export class Compass implements IControl {
 		if (!this.compassElement || !this._map) {
 			return
 		}
-		this.displayDirection = !this.displayDirection
-		if (this.displayDirection) {
+		this.displayCardinalDirection = !this.displayCardinalDirection
+		if (this.displayCardinalDirection) {
 			const bearing = this._map.getBearing()
 			const directionIcon = mapBearingToIcon(-1 * bearing)
 			// remove needle
@@ -135,7 +135,7 @@ export class Compass implements IControl {
 		innerFace.classList.add('inner-face')
 		children.push(innerFace)
 
-		if (this.displayDirection) {
+		if (this.displayCardinalDirection) {
 			const directionIcon = mapBearingToIcon(0)
 			innerFace.appendChild(directionIcon)
 		} else {
