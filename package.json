@@ -5,14 +5,15 @@
   "type": "module",
   "files": [
     "dist",
-    "index.d.ts"
+    "types"
   ],
   "main": "./dist/compass.js",
   "module": "./dist/compass.umd.cjs",
   "exports": {
     ".": {
       "import": "./dist/compass.js",
-      "require": "./dist/compass.umd.cjs"
+      "require": "./dist/compass.umd.cjs",
+      "types": "./types/index.d.ts"
     },
     "./dist/style.css": {
       "import": "./dist/style.css",
