@@ -20,7 +20,7 @@
       "require": "./dist/style.css"
     }
   },
-  "types": "index.d.ts",
+  "types": "./types/index.d.ts",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
