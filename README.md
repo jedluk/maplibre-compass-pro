@@ -34,7 +34,9 @@ const compass = new Compass({ size: 'sm' })
 map.addControl(compass, 'bottom-left')
 ```
 
-Remember to import compass styles 🙏🙏🙏 Compass props:
+Remember to import compass styles 🙏🙏🙏 at top of the file.
+
+Compass props:
 
 ```ts
 type CompassProps = {
@@ -66,26 +68,6 @@ setTimeout(() => {
 }, 3000)
 ```
 
-## Integration with React
-
-If you're working in React environment consider using [react-map-gl](https://visgl.github.io/react-map-gl/) as maplibre wrapper, together with [map-gl-compass-pro](https://www.npmjs.com/package/map-gl-compass-pro). As for now there are tiny differences between those 2 packages (in view only) - but they will be aligned soon. It's also possible to wrap maplibre-compass-pro with [use-control hook](https://visgl.github.io/react-map-gl/docs/api-reference/use-control).
-
-```tsx
-import 'maplibre-compass-pro/dist/style.css'
-
-import { Compass as CompassPro } from 'maplibre-compass-pro'
-import { useControl } from 'react-map-gl'
-
-export function Compass() {
-	useControl(() => new CompassPro({ size: 'md', displayDirections: true }), {
-		position: 'bottom-left',
-	})
-	return null
-}
-```
-
-This component has to be a child of Map component.
-
 ## Placement
 
 Compass position is determined by second argument of addControl function. You can pick one of: _top-left_, _top-right_, _bottom-left_, and _bottom-right_. Default position is _bottom-left_. If you want to move the compass away from the corner please override maplibre class, like below:
@@ -94,5 +76,31 @@ Compass position is determined by second argument of addControl function. You ca
 .maplibregl-ctrl-bottom-left {
 	left: 10px;
 	bottom: 10px;
+}
+```
+
+## Integration with React
+
+If you work in React environment consider using [react-map-gl](https://visgl.github.io/react-map-gl/) as maplibre wrapper, together with [map-gl-compass-pro](https://www.npmjs.com/package/map-gl-compass-pro) (official wrapper for mapibre-compass-pro). Code snippet:
+
+```tsx
+import 'maplibre-gl/dist/maplibre-gl.css'
+
+import Map from 'react-map-gl/maplibre'
+import Compass from 'maplibre-compass-pro'
+import { useState } from 'react'
+
+export function DemoApp() {
+	const [compassSize, setCompassSize] = useState('md')
+	const [displayDirection, setDisplayDirection] = useState(true)
+
+	return (
+		<Map
+			style={{ width: '100%', height: '100vh' }}
+			mapStyle="/<your_map_style>.json"
+		>
+			<Compass size={compassSize} displayDirection={displayDirection} />
+		</Map>
+	)
 }
 ```

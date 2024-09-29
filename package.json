@@ -1,25 +1,26 @@
 {
   "name": "maplibre-compass-pro",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Professional compass for maplibre-based projects",
   "type": "module",
   "files": [
     "dist",
-    "index.d.ts"
+    "types"
   ],
   "main": "./dist/compass.js",
   "module": "./dist/compass.umd.cjs",
   "exports": {
     ".": {
       "import": "./dist/compass.js",
-      "require": "./dist/compass.umd.cjs"
+      "require": "./dist/compass.umd.cjs",
+      "types": "./types/index.d.ts"
     },
     "./dist/style.css": {
       "import": "./dist/style.css",
       "require": "./dist/style.css"
     }
   },
-  "types": "index.d.ts",
+  "types": "./types/index.d.ts",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -27,7 +28,8 @@
     "lint:code-fix": "prettier ./src --write",
     "lint:styles": "stylelint \"src/**/*.css\"",
     "lint:styles-fix": "stylelint \"src/**/*.css\" --fix",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "publish:test": "yarn build && npm pack && npm publish --access public --dry-run"
   },
   "engineStrict": true,
   "engines": {
