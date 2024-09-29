@@ -28,7 +28,8 @@
     "lint:code-fix": "prettier ./src --write",
     "lint:styles": "stylelint \"src/**/*.css\"",
     "lint:styles-fix": "stylelint \"src/**/*.css\" --fix",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "publish:test": "yarn build && npm pack && npm publish --access public --dry-run"
   },
   "engineStrict": true,
   "engines": {
