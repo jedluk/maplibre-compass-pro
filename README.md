@@ -81,7 +81,7 @@ Compass position is determined by second argument of addControl function. You ca
 
 ## Integration with React
 
-If you work in React environment consider using [react-map-gl](https://visgl.github.io/react-map-gl/) as maplibre wrapper, together with [map-gl-compass-pro](https://www.npmjs.com/package/map-gl-compass-pro) (official wrapper for this mapibre-compass-pro). Code snippet:
+If you work in React environment consider using [react-map-gl](https://visgl.github.io/react-map-gl/) as maplibre wrapper, together with [map-gl-compass-pro](https://www.npmjs.com/package/map-gl-compass-pro) (official wrapper for mapibre-compass-pro). Code snippet:
 
 ```tsx
 import 'maplibre-gl/dist/maplibre-gl.css'
