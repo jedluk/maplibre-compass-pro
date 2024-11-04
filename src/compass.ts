@@ -15,6 +15,7 @@ export class Compass implements IControl {
 	#visualizePitch: boolean
 	#displayCardinalDirection: boolean
 	#compassElement?: HTMLDivElement
+	#lastBearingIcon?: SVGSVGElement
 	#customClick?: () => void
 
 	constructor({
@@ -81,30 +82,46 @@ export class Compass implements IControl {
 		}
 	}
 
+	#deduceTransformProperty = (clockwiseBearing: number, pitch: number) => {
+		let transform = `rotate(${clockwiseBearing}deg)`
+		if (this.#visualizePitch) {
+			transform += ` rotateX(${pitch}deg)`
+		}
+		return transform
+	}
+
+	#replaceDirectionIcon = (clockwiseBearing: number) => {
+		const shieldElement = this.#compassElement!.lastElementChild
+		if (!shieldElement) {
+			return
+		}
+		const icon = mapBearingToIcon(clockwiseBearing)
+		if (shieldElement.firstChild) {
+			if (icon !== this.#lastBearingIcon) {
+				shieldElement.replaceChild(icon, shieldElement.firstChild)
+				this.#lastBearingIcon = icon
+			}
+		} else {
+			// we draw icon for the very first time
+			shieldElement.appendChild(icon)
+		}
+	}
+
 	#handleMapJog = () => {
 		if (!this.#map || !this.#compassElement) {
 			return
 		}
 
-		const bearing = -1 * this.#map.getBearing()
-		let transform = `rotate(${bearing}deg)`
-		if (this.#visualizePitch) {
-			const pitch = this.#map.getPitch()
-			transform += ` rotateX(${pitch}deg)`
-		}
-		this.#compassElement.style.transform = transform
+		const bearing = this.#map.getBearing()
+		const pitch = this.#map.getPitch()
+		const clockwiseBearing = -1 * bearing
 
+		this.#compassElement.style.transform = this.#deduceTransformProperty(
+			clockwiseBearing,
+			pitch,
+		)
 		if (this.#displayCardinalDirection) {
-			const shieldElement = this.#compassElement.lastElementChild
-			if (!shieldElement) {
-				return
-			}
-			const icon = mapBearingToIcon(bearing)
-			if (shieldElement.firstChild) {
-				shieldElement.replaceChild(icon, shieldElement.firstChild)
-			} else {
-				shieldElement.appendChild(icon)
-			}
+			this.#replaceDirectionIcon(clockwiseBearing)
 		}
 	}
 
