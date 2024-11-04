@@ -116,7 +116,10 @@ export class Compass implements IControl {
 		const pitch = this.#map.getPitch()
 		const clockwiseBearing = -1 * bearing
 
-		this.#compassElement.style.transform = this.#deduceTransformProperty(clockwiseBearing, pitch)
+		this.#compassElement.style.transform = this.#deduceTransformProperty(
+			clockwiseBearing,
+			pitch,
+		)
 		if (this.#displayCardinalDirection) {
 			this.#replaceDirectionIcon(clockwiseBearing)
 		}
