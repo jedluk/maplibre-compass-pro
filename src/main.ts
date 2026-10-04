@@ -10,11 +10,14 @@ const map = new maplibregl.Map({
 	zoom: 11,
 })
 
-const compass = new Compass({
+const options: CompassProps = {
 	size: 'md',
-	visualizePitch: false,
+	visualizePitch: true,
 	displayDirection: false,
-})
+	theme: 'classic',
+}
+
+let compass = new Compass(options)
 
 map.addControl(compass, 'bottom-left')
 
@@ -23,11 +26,23 @@ map.on('load', function () {
 		.getElementById('size-selector')
 		?.addEventListener('change', function (evt) {
 			const { value } = evt.target as HTMLSelectElement
-			compass.changeSize(value as NonNullable<CompassProps['size']>)
+			options.size = value as NonNullable<CompassProps['size']>
+			compass.changeSize(options.size)
 		})
 	document
 		.getElementById('kind-selector')
-		?.addEventListener('change', function (evt) {
+		?.addEventListener('change', function () {
+			options.displayDirection = !options.displayDirection
 			compass.toggle()
+		})
+	document
+		.getElementById('theme-selector')
+		?.addEventListener('change', function (evt) {
+			const { value } = evt.target as HTMLSelectElement
+			options.theme = value as NonNullable<CompassProps['theme']>
+			// theme is picked once, when compass gets created
+			map.removeControl(compass)
+			compass = new Compass(options)
+			map.addControl(compass, 'bottom-left')
 		})
 })

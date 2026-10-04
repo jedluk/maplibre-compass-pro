@@ -1,0 +1,36 @@
+.compass-pro-scene {
+    --compass-size: 32px;
+
+    cursor: pointer;
+    height: calc(var(--compass-size) * 1.2);
+    pointer-events: all;
+    position: relative;
+    user-select: none;
+    width: calc(var(--compass-size) * 1.3);
+}
+
+.compass-pro-scene[data-size="sm"] {
+    --compass-size: 48px;
+}
+
+.compass-pro-scene[data-size="md"] {
+    --compass-size: 64px;
+}
+
+.compass-pro-scene[data-size="lg"] {
+    --compass-size: 80px;
+}
+
+.compass-pro-scene[data-size="xl"] {
+    --compass-size: 96px;
+}
+
+/* wider than the control itself, to leave some room for the shadow */
+.compass-pro-scene canvas {
+    height: calc(var(--compass-size) * 1.5);
+    left: calc(var(--compass-size) * -0.25);
+    pointer-events: none;
+    position: absolute;
+    top: calc(var(--compass-size) * -0.15);
+    width: calc(var(--compass-size) * 1.8);
+}
