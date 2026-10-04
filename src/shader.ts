@@ -88,10 +88,6 @@ vec2 map(vec3 p) {
 	if (uHasNeedle > 0.5) {
 		float needle = extrude(sdNeedle(rotation(uNeedleAngle) * p.xz), p.y + 0.14, 0.022, 0.008);
 		if (needle < res.x) res = vec2(needle, 3.0);
-
-		float pin = max(r - 0.025, abs(p.y + 0.2) - 0.1);
-		float pivot = min(length(p - vec3(0.0, -0.115, 0.0)) - 0.065, pin);
-		if (pivot < res.x) res = vec2(pivot, 2.0);
 	}
 	return res;
 }
@@ -128,16 +124,17 @@ float occlusion(vec3 p, vec3 n) {
 	return clamp(1.0 - 1.6 * occ, 0.0, 1.0);
 }
 
-// what gets mirrored in lacquer, chrome and glass
-vec3 environment(vec3 d) {
+// what gets mirrored in lacquer, chrome and glass,
+// lights: 0.0 leaves light sources out, so nothing glares back
+vec3 environment(vec3 d, float lights) {
 	// photo studio rather than open sky: dark walls, bright horizon line
 	vec3 sky = mix(vec3(0.42, 0.44, 0.48), vec3(0.05, 0.06, 0.08), smoothstep(0.0, 0.45, d.y));
 	vec3 ground = mix(vec3(0.1, 0.09, 0.08), vec3(0.01), smoothstep(0.0, -0.5, d.y));
 	vec3 color = mix(ground, sky, smoothstep(-0.02, 0.02, d.y));
 	// softbox overhead, keeps reflections alive wherever the sun is
-	color += vec3(1.8) * smoothstep(0.8, 0.86, d.y) * smoothstep(0.55, 0.35, abs(d.x));
+	color += lights * vec3(1.8) * smoothstep(0.8, 0.86, d.y) * smoothstep(0.55, 0.35, abs(d.x));
 	color *= mix(1.0, 0.08, uNight);
-	color += uLightColor * 4.0 * pow(max(dot(d, uLight), 0.0), 350.0);
+	color += lights * uLightColor * 4.0 * pow(max(dot(d, uLight), 0.0), 350.0);
 	return color;
 }
 
@@ -174,6 +171,9 @@ vec3 shade(vec3 p, vec3 rd, float material) {
 	vec3 specular = vec3(0.05);
 	vec3 emissive = vec3(0.0);
 	float gloss = 60.0;
+	float lights = 1.0;
+	// how hard the sun glints off the surface
+	float glint = 8.0;
 
 	if (material < 1.5) {
 		if (length(p.xz) < WELL_R - 0.01 && n.y > 0.5) {
@@ -182,22 +182,26 @@ vec3 shade(vec3 p, vec3 rd, float material) {
 			albedo = pow(texture2D(uFace, uv).rgb, vec3(2.2));
 			float white = smoothstep(0.35, 0.7, min(albedo.r, min(albedo.g, albedo.b)));
 			emissive = LUME * white * uNight;
+			// matte, no glare is allowed to cover what compass shows
 			specular = vec3(0.012);
-			gloss = 20.0;
+			lights = 0.0;
 		} else {
 			float glow;
 			albedo = lacquer(p, n, glow);
 			emissive = LUME * glow * uNight * 0.5;
 			gloss = 120.0;
+			// flat walls would turn white as a whole once they face the sun
+			glint = 1.0;
 		}
 	} else if (material < 2.5) {
 		albedo = vec3(0.01);
 		specular = vec3(0.62, 0.63, 0.66);
 		gloss = 200.0;
 	} else {
+		// needle stays red whatever the light, it is what compass is read by
 		albedo = RED;
 		specular = vec3(0.06);
-		gloss = 90.0;
+		lights = 0.0;
 	}
 
 	float shadow = softShadow(p + n * 0.01, uLight);
@@ -206,12 +210,12 @@ vec3 shade(vec3 p, vec3 rd, float material) {
 	vec3 mirrored = reflect(rd, n);
 	float fresnel = pow(1.0 - max(dot(n, -rd), 0.0), 5.0);
 	vec3 reflectance = specular + (1.0 - specular) * fresnel;
-	float highlight = pow(max(dot(mirrored, uLight), 0.0), gloss) * shadow;
+	float highlight = pow(max(dot(mirrored, uLight), 0.0), gloss) * shadow * lights;
 	vec3 ambient = mix(vec3(0.5, 0.55, 0.65), vec3(0.04, 0.06, 0.12), uNight) * (0.6 + 0.4 * n.y);
 
 	vec3 color = albedo * (uLightColor * diffuse * 2.4 + ambient * occ);
-	color += environment(mirrored) * reflectance * occ;
-	color += uLightColor * highlight * specular * 8.0;
+	color += environment(mirrored, lights) * reflectance * occ;
+	color += uLightColor * highlight * specular * glint;
 	return color + emissive;
 }
 
@@ -275,8 +279,8 @@ vec4 render(vec2 uv) {
 	if (dome > 0.0 && dome < t) {
 		float fresnel = 0.03 + 0.97 * pow(1.0 - max(dot(n, -rd), 0.0), 5.0);
 		vec3 mirrored = reflect(rd, n);
-		vec3 glare = environment(mirrored) * fresnel;
-		glare += uLightColor * 1.5 * pow(max(dot(mirrored, uLight), 0.0), 900.0);
+		// glass mirrors the room only, never the lights
+		vec3 glare = environment(mirrored, 0.0) * fresnel;
 		color = color * alpha * (1.0 - fresnel) + glare;
 		alpha = clamp(alpha + fresnel + dot(glare, vec3(0.33)), 0.0, 1.0);
 		return vec4(color, alpha);
