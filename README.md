@@ -2,7 +2,7 @@
 
 Professional, good looking compass, suitable for use in all kinds of maplibre-based projects, inspired by Jack Sparrow's compass.
 
-![demo](./demo.png)
+![demo](./demo.gif)
 
 ## [LIVE DEMO](https://codesandbox.io/p/sandbox/peaceful-mirzakhani-tv38ck)
 
