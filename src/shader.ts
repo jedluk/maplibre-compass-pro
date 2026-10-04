@@ -172,6 +172,8 @@ vec3 shade(vec3 p, vec3 rd, float material) {
 	vec3 emissive = vec3(0.0);
 	float gloss = 60.0;
 	float lights = 1.0;
+	// how hard the sun glints off the surface
+	float glint = 8.0;
 
 	if (material < 1.5) {
 		if (length(p.xz) < WELL_R - 0.01 && n.y > 0.5) {
@@ -188,15 +190,18 @@ vec3 shade(vec3 p, vec3 rd, float material) {
 			albedo = lacquer(p, n, glow);
 			emissive = LUME * glow * uNight * 0.5;
 			gloss = 120.0;
+			// flat walls would turn white as a whole once they face the sun
+			glint = 1.0;
 		}
 	} else if (material < 2.5) {
 		albedo = vec3(0.01);
 		specular = vec3(0.62, 0.63, 0.66);
 		gloss = 200.0;
 	} else {
+		// needle stays red whatever the light, it is what compass is read by
 		albedo = RED;
 		specular = vec3(0.06);
-		gloss = 90.0;
+		lights = 0.0;
 	}
 
 	float shadow = softShadow(p + n * 0.01, uLight);
@@ -210,7 +215,7 @@ vec3 shade(vec3 p, vec3 rd, float material) {
 
 	vec3 color = albedo * (uLightColor * diffuse * 2.4 + ambient * occ);
 	color += environment(mirrored, lights) * reflectance * occ;
-	color += uLightColor * highlight * specular * 8.0;
+	color += uLightColor * highlight * specular * glint;
 	return color + emissive;
 }
 
