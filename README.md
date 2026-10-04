@@ -56,6 +56,7 @@ type CompassProps = {
 - light and shadow follow the actual position of the sun above map center, at night the face glows in the dark
 - needle swings on a spring, flick it with a click
 - with `visualizePitch` the box is seen more from the side as the map gets pitched
+- switch between themes at any time with `compass.setTheme('3d')` / `compass.setTheme('classic')`, size and needle/cardinal mode are kept
 - `pointTo` (or `compass.setPointTo([lng, lat])`) makes the needle point to given place instead of north; pass `null` to bring north back
 
 You can omit props object so that all defaults will be used.

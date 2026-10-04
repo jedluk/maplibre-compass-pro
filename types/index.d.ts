@@ -10,6 +10,7 @@ export declare class Compass implements IControl {
     changeSize(size: NonNullable<CompassProps['size']>): void;
     toggle(): void;
     setPointTo(pointTo: CompassProps['pointTo']): void;
+    setTheme(theme: NonNullable<CompassProps['theme']>): void;
 }
 
 export declare type CompassProps = {
