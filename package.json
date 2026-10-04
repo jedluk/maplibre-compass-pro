@@ -1,6 +1,6 @@
 {
   "name": "maplibre-compass-pro",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "description": "Professional compass for maplibre-based projects",
   "type": "module",
   "files": [
