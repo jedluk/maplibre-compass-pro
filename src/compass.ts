@@ -1,12 +1,16 @@
 import './compass.css'
 import { type IControl, type Map } from 'maplibre-gl'
-import { mapBearingToIcon } from './lib'
+import { bearingBetween, mapBearingToIcon } from './lib'
+import { Scene } from './scene'
 
 export type CompassProps = {
 	size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 	displayDirection?: boolean
 	visualizePitch?: boolean
 	onClick?: () => void
+	theme?: 'classic' | '3d'
+	/** [lng, lat] the needle is drawn to instead of north (3d theme only) */
+	pointTo?: [number, number] | null
 }
 
 export class Compass implements IControl {
@@ -17,17 +21,24 @@ export class Compass implements IControl {
 	#compassElement?: HTMLDivElement
 	#lastBearingIcon?: SVGSVGElement
 	#customClick?: () => void
+	#theme: NonNullable<CompassProps['theme']>
+	#pointTo?: CompassProps['pointTo']
+	#scene?: Scene
 
 	constructor({
 		size = 'md',
 		visualizePitch = false,
 		displayDirection = false,
 		onClick,
+		theme = 'classic',
+		pointTo,
 	}: CompassProps = {}) {
 		this.#size = size
 		this.#visualizePitch = visualizePitch
 		this.#displayCardinalDirection = displayDirection
 		this.#customClick = onClick
+		this.#theme = theme
+		this.#pointTo = pointTo
 	}
 
 	#createNeedle() {
@@ -41,6 +52,18 @@ export class Compass implements IControl {
 		container.id = 'compass'
 		container.classList.add('compass-pro-wrapper')
 		container.setAttribute('data-size', this.#size)
+
+		// falls back to classic look when there is no WebGL around
+		this.#scene = this.#theme === '3d' ? Scene.create() : undefined
+		if (this.#scene) {
+			const { element } = this.#scene
+			element.setAttribute('data-size', this.#size)
+			element.addEventListener('click', this.#handleClick)
+			this.#compassElement = element
+			container.append(element)
+			this.#handleMapJog()
+			return container
+		}
 
 		const compass = document.createElement('div')
 		compass.classList.add('compass-pro')
@@ -116,6 +139,22 @@ export class Compass implements IControl {
 		const pitch = this.#map.getPitch()
 		const clockwiseBearing = -1 * bearing
 
+		if (this.#scene) {
+			const { lng, lat } = this.#map.getCenter()
+			this.#scene.update(
+				bearing,
+				this.#visualizePitch ? pitch : 0,
+				[lng, lat],
+				this.#pointTo ? bearingBetween([lng, lat], this.#pointTo) : 0,
+			)
+			this.#scene.setIcon(
+				this.#displayCardinalDirection
+					? mapBearingToIcon(clockwiseBearing)
+					: null,
+			)
+			return
+		}
+
 		this.#compassElement.style.transform = this.#deduceTransformProperty(
 			clockwiseBearing,
 			pitch,
@@ -129,12 +168,27 @@ export class Compass implements IControl {
 		this.#map = map
 		map.on('rotate', this.#handleMapJog)
 		map.on('pitch', this.#handleMapJog)
+		if (this.#theme === '3d') {
+			// sun wanders as the map is panned, so does the place needle is drawn to
+			map.on('moveend', this.#handleMapJog)
+		}
+		if (this.#pointTo) {
+			map.on('move', this.#handleMapJog)
+		}
 		return this.#createCompassElement()
 	}
 
 	onRemove(map: Map): void {
 		map.off('rotate', this.#handleMapJog)
 		map.off('pitch', this.#handleMapJog)
+		map.off('moveend', this.#handleMapJog)
+		map.off('move', this.#handleMapJog)
+		// leave nothing behind, so API called afterwards has nothing to act on
+		this.#compassElement?.parentElement?.remove()
+		this.#scene?.destroy()
+		this.#scene = undefined
+		this.#compassElement = undefined
+		this.#map = undefined
 	}
 
 	getDefaultPosition() {
@@ -152,6 +206,10 @@ export class Compass implements IControl {
 			return
 		}
 		this.#displayCardinalDirection = !this.#displayCardinalDirection
+		if (this.#scene) {
+			this.#handleMapJog()
+			return
+		}
 		if (this.#displayCardinalDirection) {
 			const bearing = this.#map.getBearing()
 			const directionIcon = mapBearingToIcon(-1 * bearing)
@@ -165,5 +223,15 @@ export class Compass implements IControl {
 			const needle = this.#createNeedle()
 			this.#compassElement.appendChild(needle)
 		}
+	}
+
+	setPointTo(pointTo: CompassProps['pointTo']) {
+		this.#pointTo = pointTo
+		this.#map?.off('move', this.#handleMapJog)
+		if (pointTo) {
+			// needle has to follow map panning as well
+			this.#map?.on('move', this.#handleMapJog)
+		}
+		this.#handleMapJog()
 	}
 }

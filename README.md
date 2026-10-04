@@ -44,8 +44,19 @@ type CompassProps = {
 	visualizePitch?: boolean // default false
 	displayDirections?: boolean // default false (use cardinal directions instead of needle)
 	onClick?: () => void // default map.resetNorthPitch
+	theme?: 'classic' | '3d' // default 'classic'
+	pointTo?: [number, number] | null // [lng, lat], 3d theme only
 }
 ```
+
+### 3D theme
+
+`theme: '3d'` renders the very same compass as a real object: lacquered box with a glass dome, raymarched in WebGL (no extra dependencies, falls back to classic look when WebGL is not available).
+
+- light and shadow follow the actual position of the sun above map center, at night the face glows in the dark
+- needle swings on a spring, flick it with a click
+- with `visualizePitch` the box is seen more from the side as the map gets pitched
+- `pointTo` (or `compass.setPointTo([lng, lat])`) makes the needle point to given place instead of north; pass `null` to bring north back
 
 You can omit props object so that all defaults will be used.
 

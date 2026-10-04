@@ -21,3 +21,4 @@ public/sandbox
 
 package
 *.tgz
+.codegpt
