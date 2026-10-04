@@ -168,10 +168,8 @@ export class Compass implements IControl {
 		this.#map = map
 		map.on('rotate', this.#handleMapJog)
 		map.on('pitch', this.#handleMapJog)
-		if (this.#theme === '3d') {
-			// sun wanders as the map is panned, so does the place needle is drawn to
-			map.on('moveend', this.#handleMapJog)
-		}
+		// sun wanders as the map is panned (3d theme)
+		map.on('moveend', this.#handleMapJog)
 		if (this.#pointTo) {
 			map.on('move', this.#handleMapJog)
 		}
@@ -232,6 +230,25 @@ export class Compass implements IControl {
 			// needle has to follow map panning as well
 			this.#map?.on('move', this.#handleMapJog)
 		}
+		this.#handleMapJog()
+	}
+
+	setTheme(theme: NonNullable<CompassProps['theme']>) {
+		if (theme === this.#theme) {
+			return
+		}
+		this.#theme = theme
+
+		const container = this.#compassElement?.parentElement
+		if (!this.#map || !container) {
+			// not on the map yet, theme gets picked up once compass is added
+			return
+		}
+		// compass is built anew, right where the previous one was
+		this.#scene?.destroy()
+		this.#scene = undefined
+		this.#lastBearingIcon = undefined
+		container.replaceWith(this.#createCompassElement())
 		this.#handleMapJog()
 	}
 }
